@@ -19,6 +19,12 @@ static class Scanner {
                 case '*': tokens.Add(new Token { Type = TokenType.Star }); break;
                 case '/': tokens.Add(new Token { Type = TokenType.Slash }); break;
                 case '%': tokens.Add(new Token { Type = TokenType.Percent }); break;
+                case '(': tokens.Add(new Token { Type = TokenType.LParen }); break;
+                case ')': tokens.Add(new Token { Type = TokenType.RParen }); break;
+                case '[': tokens.Add(new Token { Type = TokenType.LBracket }); break;
+                case ']': tokens.Add(new Token { Type = TokenType.RBracket }); break;
+                case '{': tokens.Add(new Token { Type = TokenType.LBrace }); break;
+                case '}': tokens.Add(new Token { Type = TokenType.RBrace }); break;
 
                 // numbers are a bit trickier
                 default:
