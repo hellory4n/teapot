@@ -1,4 +1,6 @@
-﻿Console.WriteLine("Welcome to the C# Teapot REPL\nWrite `.exit` to exit\n");
+﻿using csteapot.lexer;
+
+Console.WriteLine("Welcome to Teapot (C# version)\nWrite `.exit` to exit\n");
 
 while (true) {
     Console.Write("> ");
@@ -7,5 +9,9 @@ while (true) {
         break;
     }
 
-    Console.WriteLine("yep, that's a value lmao");
+    List<Token> tokens = Scanner.Scan(input);
+    // for now just print the tokens
+    foreach (var token in tokens) {
+        Console.WriteLine(token);
+    }
 }
