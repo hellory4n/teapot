@@ -5,11 +5,13 @@ interface IAstExpression : IAstNode {}
 interface IAstStatement : IAstNode {}
 
 // expressions
-class AstLiteral : IAstExpression {
+class AstLiteral : IAstExpression
+{
     public object Value { get; set; }
 }
 
-class AstBinaryExpression : IAstExpression {
+class AstBinaryExpression : IAstExpression
+{
     public IAstExpression Left { get; set; }
     public IAstExpression Right { get; set; }
     public string Operator { get; set; }

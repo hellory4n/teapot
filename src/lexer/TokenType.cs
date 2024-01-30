@@ -1,6 +1,7 @@
 namespace csteapot.lexer;
 
-enum TokenType {
+enum TokenType
+{
     // brackets and shit
     // (    )       [         ]         {       }
     LParen, RParen, LBracket, RBracket, LBrace, RBrace,

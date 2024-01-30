@@ -2,8 +2,10 @@ using System.Globalization;
 
 namespace csteapot.lexer;
 
-static class Scanner {
-    public static List<Token> Scan(string text) {
+static class Scanner
+{
+    public static List<Token> Scan(string text)
+    {
         // so we don't have to deal with this every single time we want to look at the next character
         text += '\0';
         List<Token> tokens = [];
@@ -56,7 +58,8 @@ static class Scanner {
                                 Type = TokenType.Float,
                                 Literal = double.Parse(thing, CultureInfo.InvariantCulture)
                             });
-                        } else {
+                        }
+                        else {
                             tokens.Add(new Token {
                                 Type = TokenType.Integer,
                                 Literal = int.Parse(thing, CultureInfo.InvariantCulture)
