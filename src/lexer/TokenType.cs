@@ -11,5 +11,7 @@ enum TokenType
 
     // operators
     // +  -      *     /      %
-    Plus, Minus, Star, Slash, Percent
+    Plus, Minus, Star, Slash, Percent,
+
+    End
 }
