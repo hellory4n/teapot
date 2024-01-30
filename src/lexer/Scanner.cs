@@ -1,12 +1,10 @@
-using System.Globalization;
-
 namespace csteapot.lexer;
 
 static partial class Scanner
 {
     static int i = 0;
     static string source = "";
-    static List<Token> tokens = [];
+    public static List<Token> Tokens = [];
 
     public static List<Token> Scan(string text)
     {
@@ -37,6 +35,6 @@ static partial class Scanner
             i++;
         }
 
-        return tokens;
+        return Tokens;
     }
 }

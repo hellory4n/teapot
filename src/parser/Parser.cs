@@ -2,43 +2,32 @@ using csteapot.lexer;
 
 namespace csteapot.parser;
 
-static class Parser
+static partial class Parser
 {
-    public static List<IAstNode> Parse(List<Token> tokens)
+    public static List<IAstNode> Nodes = [];
+    static int i = 0;
+    static List<Token> tokens = [];
+
+    public static List<IAstNode> Parse(List<Token> tokens_)
     {
-        List<IAstNode> nodes = [];
-        // so it doesn't crash when looking ahead
-        // change the limit if we ever need more looking ahead than 3 tokens
-        for (int i = 0; i < 3; i++) {
-            tokens.Add(new Token {
-                Type = TokenType.End
-            });
-        }
+        // we add this so we don't have to deal with checking the end of the thing all the time
+        tokens = tokens_;
+        tokens.Add(new Token { Type = TokenType.End });
+        tokens.Add(new Token { Type = TokenType.End });
 
-        // similarly to the lexer, we use a normal for loop since it allows changing the index
-        // and looking at the next character
-        for (int i = 0; i < tokens.Count; i++) {
+        while (i < tokens.Count) {
             Token t = tokens[i];
-            
-            switch (t.Type) {
-                case TokenType.Float:
-                case TokenType.Integer:
-                    // check the next 2 tokens for binary expressions
-                    if (ParserLists.NumberOperators.Contains(tokens[i + 1].Type)) {
-                        i++;
 
-                        if (tokens[i + 1].Type == TokenType.Integer || tokens[i + 1].Type == TokenType.Float) {
-                            nodes.Add(new AstBinaryExpression {
-                                Left = new AstLiteral { Value = t.Literal },
-                                Operator = tokens[i].Type,
-                                Right = new AstLiteral { Value = tokens[i + 1].Literal}
-                            });
-                        }
-                    }
+            switch (t.Type) {
+                case TokenType.Integer:
+                case TokenType.Float:
+                    ParseExpression();
                     break;
             }
+
+            i++;
         }
 
-        return nodes;
+        return Nodes;
     }
 }

@@ -32,7 +32,7 @@ static partial class Scanner
 
     public static void Add(TokenType type, object literal = null)
     {
-        tokens.Add(new Token {
+        Tokens.Add(new Token {
             Type = type,
             Literal = literal
         });

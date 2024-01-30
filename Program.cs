@@ -15,8 +15,10 @@ while (true) {
     foreach (var token in tokens) {
         Console.WriteLine(token);
     }
+    Scanner.Tokens.Clear();
 
     List<IAstNode> haha = Parser.Parse(tokens);
     // print the tree :)
     TreePrinter5000.DoIt(haha);
+    Parser.Nodes.Clear();
 }
