@@ -16,7 +16,7 @@ while (true) {
         Console.WriteLine(token);
     }
 
-    //List<IAstNode> haha = Parser.Parse(tokens);
+    List<IAstNode> haha = Parser.Parse(tokens);
     // print the tree :)
-    //TreePrinter5000.DoIt(haha);
+    TreePrinter5000.DoIt(haha);
 }

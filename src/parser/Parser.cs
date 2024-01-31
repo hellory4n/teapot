@@ -22,7 +22,7 @@ static partial class Parser
             switch (t.Type) {
                 case TokenType.Integer:
                 case TokenType.Float:
-                    ParseExpression();
+                    Nodes.Add(ParseExpression());
                     break;
             }
 

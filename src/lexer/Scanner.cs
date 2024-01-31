@@ -1,40 +1,71 @@
+using System.Globalization;
+
 namespace csteapot.lexer;
 
-static partial class Scanner
+static class Scanner
 {
-    static int i = 0;
-    static string source = "";
-    public static List<Token> Tokens = [];
-
     public static List<Token> Scan(string text)
     {
-        // we add \0 so we don't have to deal with checking the end of the thing all the time
-        source = text + "\0\0\0";
+        // so we don't have to deal with this every single time we want to look at the next character
+        text += '\0';
+        List<Token> tokens = [];
 
-        while (i < source.Length) {
-            char c = source[i];
+        // we use a normal for loop since it allows changing the index and looking at the next character
+        for (int i = 0; i < text.Length; i++) {
+            char c = text[i];
 
             switch (c) {
                 // pretty easy to parse those
-                case '+': Add(TokenType.Plus); break;
-                case '-': Add(TokenType.Minus); break;
-                case '*': Add(TokenType.Star); break;
-                case '/': Add(TokenType.Slash); break;
-                case '%': Add(TokenType.Percent); break;
-                case '(': Add(TokenType.LParen); break;
-                case ')': Add(TokenType.RParen); break;
+                case '+': tokens.Add(new Token { Type = TokenType.Plus }); break;
+                case '-': tokens.Add(new Token { Type = TokenType.Minus }); break;
+                case '*': tokens.Add(new Token { Type = TokenType.Star }); break;
+                case '/': tokens.Add(new Token { Type = TokenType.Slash }); break;
+                case '%': tokens.Add(new Token { Type = TokenType.Percent }); break;
+                case '(': tokens.Add(new Token { Type = TokenType.LParen }); break;
+                case ')': tokens.Add(new Token { Type = TokenType.RParen }); break;
 
+                // numbers are a bit trickier
                 default:
-                    // is it a number??????????
-                    if (IsDigit(c)) {
-                        ProcessNumber(c);
+                    if (ScannerUtils.IsDigit(c)) {
+                        bool isFloat = false;
+                        string thing = c.ToString();
+
+                        while (ScannerUtils.IsDigit(text[i + 1])) {
+                            i++;
+                            thing += text[i];
+                        }
+
+                        // now check if it's actually a float
+                        if (text[i + 1] == '.') {
+                            isFloat = true;
+                            i++;
+                            thing += '.';
+
+                            // and do that shit again
+                            while (ScannerUtils.IsDigit(text[i + 1])) {
+                                i++;
+                                thing += text[i];
+                            }
+                        }
+
+                        // then we actually add the token
+                        if (isFloat) {
+                            tokens.Add(new Token {
+                                Type = TokenType.Float,
+                                Literal = double.Parse(thing, CultureInfo.InvariantCulture)
+                            });
+                        }
+                        else {
+                            tokens.Add(new Token {
+                                Type = TokenType.Integer,
+                                Literal = int.Parse(thing, CultureInfo.InvariantCulture)
+                            });
+                        }
                     }
                     break;
             }
-
-            i++;
         }
 
-        return Tokens;
+        return tokens;
     }
 }
