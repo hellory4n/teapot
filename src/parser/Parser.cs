@@ -11,7 +11,8 @@ static partial class Parser
     public static List<IAstNode> Parse(List<Token> tokens_)
     {
         // we add this so we don't have to deal with checking the end of the thing all the time
-        tokens = tokens_;
+        // we need .ToList() to copy the list
+        tokens = tokens_.ToList();
         tokens.Add(new Token { Type = TokenType.End });
         tokens.Add(new Token { Type = TokenType.End });
 

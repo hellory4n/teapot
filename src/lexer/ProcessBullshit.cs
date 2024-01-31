@@ -10,8 +10,8 @@ static partial class Scanner
         string thing = c.ToString();
 
         while (IsDigit(source[i + 1])) {
-            Continue();
             thing += source[i];
+            Continue();
         }
 
         // now check if it's actually a float
@@ -22,8 +22,8 @@ static partial class Scanner
 
             // and do that shit again
             while (IsDigit(source[i + 1])) {
-                Continue();
                 thing += source[i];
+                Continue();
             }
         }
 

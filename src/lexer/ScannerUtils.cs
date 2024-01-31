@@ -36,7 +36,6 @@ static partial class Scanner
             Type = type,
             Literal = literal
         });
-        Continue();
     }
 
     public static bool IsDigit(char c) => c == '0' || c == '1' || c == '2' || c == '3' || c == '4' ||
