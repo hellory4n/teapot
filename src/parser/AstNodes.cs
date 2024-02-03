@@ -3,22 +3,15 @@ using csteapot.lexer;
 namespace csteapot.parser;
 
 interface IAstNode {}
-interface IAstExpression : IAstNode
-{
-    public string GetDebugStuff();
-}
-
-interface IAstStatement : IAstNode
-{
-    public string GetDebugStuff();
-}
+interface IAstExpression : IAstNode {}
+interface IAstStatement : IAstNode {}
 
 // expressions
 class AstLiteral : IAstExpression
 {
     public object Value { get; set; }
 
-    public string GetDebugStuff()
+    public override string ToString()
     {
         return $"Literal ({Value})";
     }
@@ -30,9 +23,8 @@ class AstBinaryExpression : IAstExpression
     public IAstExpression Right { get; set; }
     public TokenType Operator { get; set; }
 
-    public string GetDebugStuff()
+    public override string ToString()
     {
-        return $"Binary expression ({Left.GetDebugStuff()}, {Operator:g}, {Right.GetDebugStuff()})";
+        return $"Binary expression ({Left}, {Operator:g}, {Right})";
     }
 }
-

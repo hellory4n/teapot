@@ -12,11 +12,12 @@ while (true) {
 
     List<Token> tokens = Scanner.Scan(input);
     // for now just print the tokens
-    foreach (var token in tokens) {
+    /*foreach (var token in tokens) {
         Console.WriteLine(token);
-    }
+    }*/
 
     List<IAstNode> haha = Parser.Parse(tokens);
     // print the tree :)
+    Console.WriteLine(haha.Count);
     TreePrinter5000.DoIt(haha);
 }

@@ -6,7 +6,7 @@ static class TreePrinter5000
     {
         foreach (var node in nodes) {
             if (node is IAstExpression heheheha) {
-                Console.WriteLine($"{{{heheheha.GetDebugStuff()}}}");
+                Console.WriteLine($"{{{heheheha}}}");
             }
         }
     }
