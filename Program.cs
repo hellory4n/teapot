@@ -1,4 +1,5 @@
-﻿using csteapot.lexer;
+﻿using csteapot.compiler;
+using csteapot.lexer;
 using csteapot.parser;
 
 Console.WriteLine("Welcome to Teapot (C# version)\nWrite `.exit` to exit\n");
@@ -20,4 +21,13 @@ while (true) {
     // print the tree :)
     Console.WriteLine(haha.Count);
     TreePrinter5000.DoIt(haha);
+
+    Console.WriteLine();
+    Console.WriteLine("===== Compiling project to C =====");
+    Console.WriteLine();
+
+    // duplicate the list :)
+    Compiler.Compile(haha.ToList());
+
+    Console.WriteLine("Your bullshit has been compiled.");
 }
