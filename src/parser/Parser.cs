@@ -23,6 +23,8 @@ static partial class Parser
             switch (t.Type) {
                 case TokenType.Integer:
                 case TokenType.Float:
+                case TokenType.True:
+                case TokenType.False:
                 case TokenType.LParen:
                     Nodes.Add(ToRpnThenAst());
                     break;

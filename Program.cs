@@ -17,7 +17,7 @@ while (true) {
         Console.WriteLine(token);
     }
 
-    /*List<IAstNode> haha = Parser.Parse(tokens);
+    List<IAstNode> haha = Parser.Parse(tokens);
     // print the tree :)
     Console.WriteLine(haha.Count);
     TreePrinter5000.DoIt(haha);
@@ -29,5 +29,5 @@ while (true) {
     // duplicate the list :)
     Compiler.Compile(haha.ToList());
 
-    Console.WriteLine("Your bullshit has been compiled.");*/
+    Console.WriteLine("Your bullshit has been compiled.");
 }

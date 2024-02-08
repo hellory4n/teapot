@@ -23,6 +23,9 @@ class AstLiteral : IAstExpression
         else if (Value is int v) {
             return $"(double){v.ToString(CultureInfo.InvariantCulture)}";
         }
+        else if (Value is bool ean) {
+            return ean ? "1" : "0";
+        }
         else {
             return Value.ToString();
         }
@@ -48,6 +51,14 @@ class AstBinaryExpression : IAstExpression
             TokenType.Star => "*",
             TokenType.Slash => "/",
             TokenType.Percent => "%",
+            TokenType.And => "&&",
+            TokenType.Or => "||",
+            TokenType.Less => "<",
+            TokenType.Greater => ">",
+            TokenType.LessEqual => "<=",
+            TokenType.GreaterEqual => ">=",
+            TokenType.EqualEqual => "==",
+            TokenType.BangEqual => "!=",
             _ => "",
         };
         return $"({Left.ToC()} {op} {Right.ToC()})";
@@ -68,6 +79,7 @@ class AstUnaryExpression : IAstExpression
     {
         string op = Operator switch {
             TokenType.Negate => "-",
+            TokenType.Bang => "!",
             _ => "",
         };
         return $"({op}{Operand.ToC()})";

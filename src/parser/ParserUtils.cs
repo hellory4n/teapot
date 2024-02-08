@@ -22,6 +22,8 @@ static partial class Parser
             switch (t.Type) {
                 case TokenType.Integer:
                 case TokenType.Float:
+                case TokenType.True:
+                case TokenType.False:
                     output.Push(t);
                     break;
                 
@@ -40,6 +42,14 @@ static partial class Parser
                 case TokenType.Star:
                 case TokenType.Slash:
                 case TokenType.Percent:
+                case TokenType.And:
+                case TokenType.Or:
+                case TokenType.Greater:
+                case TokenType.GreaterEqual:
+                case TokenType.Less:
+                case TokenType.LessEqual:
+                case TokenType.EqualEqual:
+                case TokenType.BangEqual:
                     while (operators.Count > 0 && GetPrecedence(operators.Peek().Type) >= GetPrecedence(t.Type)) {
                         output.Push(operators.Pop());
                     }
@@ -49,16 +59,22 @@ static partial class Parser
                 // the minus operator needs special handling since it might also be an unary operator
                 // for negating stuff
                 case TokenType.Minus:
-                    // 
+                    // unary -
                     if (i == 0 || tokens[i - 1].Type == TokenType.LParen || tokens[i - 1].Type == TokenType.Plus || tokens[i - 1].Type == TokenType.Minus) {
                         operators.Push(new Token { Type = TokenType.Negate });
-                    } else {
-                        // Binary minus
+                    }
+                    // binary -
+                    else {
                         while (operators.Count > 0 && GetPrecedence(operators.Peek().Type) >= GetPrecedence(t.Type)) {
                             output.Push(operators.Pop());
                         }
                         operators.Push(t);
                     }
+                    break;
+                
+                // the not operator also needs special handling
+                case TokenType.Bang:
+                    operators.Push(new Token { Type = TokenType.Bang });
                     break;
             }
 
@@ -90,7 +106,7 @@ static partial class Parser
         // now that we converted it to postfix, we need to convert it to ast
         Stack<IAstExpression> expression = [];
         foreach (var token in newOutput) {
-            Console.WriteLine($"token: {token}, expression: [{string.Join(", ", expression)}]");
+            //Console.WriteLine($"token: {token}, expression: [{string.Join(", ", expression)}]");
             switch (token.Type) {
                 case TokenType.Integer:
                 case TokenType.Float:
@@ -98,11 +114,27 @@ static partial class Parser
                     //Console.WriteLine($"token: {token}, expression: [{string.Join(", ", expression)}]");
                     break;
                 
+                case TokenType.True:
+                    expression.Push(new AstLiteral { Value = true });
+                    break;
+                
+                case TokenType.False:
+                    expression.Push(new AstLiteral { Value = false });
+                    break;
+                
                 case TokenType.Plus:
                 case TokenType.Minus:
                 case TokenType.Star:
                 case TokenType.Slash:
                 case TokenType.Percent:
+                case TokenType.And:
+                case TokenType.Or:
+                case TokenType.Greater:
+                case TokenType.GreaterEqual:
+                case TokenType.Less:
+                case TokenType.LessEqual:
+                case TokenType.EqualEqual:
+                case TokenType.BangEqual:
                     //Console.WriteLine($"token: {token}, expression: [{string.Join(", ", expression)}]");
                     IAstExpression right = expression.Pop();
                     //Console.WriteLine($"token: {token}, expression: [{string.Join(", ", expression)}]");
@@ -117,11 +149,12 @@ static partial class Parser
                     break;
 
                 case TokenType.Negate:
+                case TokenType.Bang:
                     IAstExpression operand = expression.Pop();
 
                     expression.Push(new AstUnaryExpression {
                         Operand = operand,
-                        Operator = TokenType.Negate
+                        Operator = token.Type
                     });
                     break;
             }
@@ -131,11 +164,14 @@ static partial class Parser
         return expression.Pop();
     }
 
-    static int GetPrecedence(TokenType tokenType)
+    static int GetPrecedence(TokenType t)
     {
-        if (tokenType == TokenType.Plus || tokenType == TokenType.Minus) return 1;
-        if (tokenType == TokenType.Star || tokenType == TokenType.Slash || tokenType == TokenType.Percent) return 2;
-        if (tokenType == TokenType.Negate) return 3;
+        if (t == TokenType.Or) return 1;
+        if (t == TokenType.Plus || t == TokenType.Minus || t == TokenType.And) return 2;
+        if (t == TokenType.Star || t == TokenType.Slash || t == TokenType.Percent || t == TokenType.Less ||
+        t == TokenType.Greater || t == TokenType.LessEqual || t == TokenType.GreaterEqual ||
+        t == TokenType.EqualEqual || t == TokenType.BangEqual) return 3;
+        if (t == TokenType.Negate || t == TokenType.Bang) return 4;
         return 0;
     }
 
