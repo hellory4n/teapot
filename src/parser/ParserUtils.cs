@@ -62,12 +62,12 @@ static partial class Parser
                     break;
             }
 
-            Console.WriteLine($"i: {i}, token: {t}, operators: [{string.Join(", ", operators)}], output: [{string.Join(", ", output)}]");
+            //Console.WriteLine($"i: {i}, token: {t}, operators: [{string.Join(", ", operators)}], output: [{string.Join(", ", output)}]");
 
             i++;
         }
 
-        Console.WriteLine();
+        //Console.WriteLine();
 
         while (operators.Count > 0) {
             // shit doesn't work
@@ -75,17 +75,17 @@ static partial class Parser
                 output.Push(operators.Pop());
             }
             catch (InvalidOperationException) {
-                Console.WriteLine($"operators: [{string.Join(", ", operators)}], output: [{string.Join(", ", output)}]");
+                //Console.WriteLine($"operators: [{string.Join(", ", operators)}], output: [{string.Join(", ", output)}]");
                 break;
             }
-            Console.WriteLine($"operators: [{string.Join(", ", operators)}], output: [{string.Join(", ", output)}]");
+            //Console.WriteLine($"operators: [{string.Join(", ", operators)}], output: [{string.Join(", ", output)}]");
         }
 
         // the first step generates results backwards
         Token[] newOutput = output.Reverse().ToArray();
-        Console.WriteLine($"new output: [{string.Join(", ", newOutput.ToList())}]");
+        //Console.WriteLine($"new output: [{string.Join(", ", newOutput.ToList())}]");
 
-        Console.WriteLine();
+        //Console.WriteLine();
 
         // now that we converted it to postfix, we need to convert it to ast
         Stack<IAstExpression> expression = [];
@@ -95,7 +95,7 @@ static partial class Parser
                 case TokenType.Integer:
                 case TokenType.Float:
                     expression.Push(new AstLiteral { Value = token.Literal });
-                    Console.WriteLine($"token: {token}, expression: [{string.Join(", ", expression)}]");
+                    //Console.WriteLine($"token: {token}, expression: [{string.Join(", ", expression)}]");
                     break;
                 
                 case TokenType.Plus:
@@ -103,11 +103,11 @@ static partial class Parser
                 case TokenType.Star:
                 case TokenType.Slash:
                 case TokenType.Percent:
-                    Console.WriteLine($"token: {token}, expression: [{string.Join(", ", expression)}]");
+                    //Console.WriteLine($"token: {token}, expression: [{string.Join(", ", expression)}]");
                     IAstExpression right = expression.Pop();
-                    Console.WriteLine($"token: {token}, expression: [{string.Join(", ", expression)}]");
+                    //Console.WriteLine($"token: {token}, expression: [{string.Join(", ", expression)}]");
                     IAstExpression left = expression.Pop();
-                    Console.WriteLine($"token: {token}, expression: [{string.Join(", ", expression)}]");
+                    //Console.WriteLine($"token: {token}, expression: [{string.Join(", ", expression)}]");
 
                     expression.Push(new AstBinaryExpression {
                         Left = left,

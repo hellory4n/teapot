@@ -24,6 +24,56 @@ static class Scanner
                 case '(': tokens.Add(new Token { Type = TokenType.LParen }); break;
                 case ')': tokens.Add(new Token { Type = TokenType.RParen }); break;
 
+                // dumb operators that can also be keywords
+                case '&':
+                    if (text[i + 1] == '&') {
+                        tokens.Add(new Token { Type = TokenType.And });
+                    }
+                    break;
+                
+                case '|':
+                    if (text[i + 1] == '|') {
+                        tokens.Add(new Token { Type = TokenType.Or });
+                    }
+                    break;
+                
+                // =
+                case '=':
+                    if (text[i + 1] == '=') {
+                        tokens.Add(new Token { Type = TokenType.EqualEqual });
+                    }
+                    else {
+                        tokens.Add(new Token { Type = TokenType.Equal });
+                    }
+                    break;
+
+                case '!':
+                    if (text[i + 1] == '=') {
+                        tokens.Add(new Token { Type = TokenType.BangEqual });
+                    }
+                    else {
+                        tokens.Add(new Token { Type = TokenType.Bang });
+                    }
+                    break;
+                
+                case '<':
+                    if (text[i + 1] == '=') {
+                        tokens.Add(new Token { Type = TokenType.LessEqual });
+                    }
+                    else {
+                        tokens.Add(new Token { Type = TokenType.Less });
+                    }
+                    break;
+                
+                case '>':
+                    if (text[i + 1] == '=') {
+                        tokens.Add(new Token { Type = TokenType.GreaterEqual });
+                    }
+                    else {
+                        tokens.Add(new Token { Type = TokenType.Greater });
+                    }
+                    break;
+
                 // numbers are a bit trickier
                 default:
                     if (ScannerUtils.IsDigit(c)) {
@@ -59,6 +109,29 @@ static class Scanner
                             tokens.Add(new Token {
                                 Type = TokenType.Integer,
                                 Literal = int.Parse(thing, CultureInfo.InvariantCulture)
+                            });
+                        }
+                    }
+
+                    // handle keywords/identifiers
+                    if (ScannerUtils.IsLetter(c) || c == '_') {
+                        string id = "";
+
+                        while (ScannerUtils.IsValidId(text[i + 1])) {
+                            id += text[i];
+                            i++;
+                        }
+                        id += text[i];
+
+                        if (Keywords.KeyOfWords.TryGetValue(id, out TokenType epicAmazingFantasticMajesticToken)) {
+                            tokens.Add(new Token {
+                                Type = epicAmazingFantasticMajesticToken
+                            });
+                        }
+                        else {
+                            tokens.Add(new Token {
+                                Type = TokenType.Identifier,
+                                Literal = id
                             });
                         }
                     }
