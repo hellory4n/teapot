@@ -58,3 +58,23 @@ class AstBinaryExpression : IAstExpression
         return $"Binary expression ({Left}, {Operator:g}, {Right})";
     }
 }
+
+class AstUnaryExpression : IAstExpression
+{
+    public IAstExpression Operand { get; set; }
+    public TokenType Operator { get; set; }
+
+    public string ToC()
+    {
+        string op = Operator switch {
+            TokenType.Negate => "-",
+            _ => "",
+        };
+        return $"({op}{Operand.ToC()})";
+    }
+
+    public override string ToString()
+    {
+        return $"Unary expression ({Operator:g}, {Operand})";
+    }
+}

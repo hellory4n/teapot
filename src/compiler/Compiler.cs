@@ -12,11 +12,12 @@ static class Compiler
         #include <stdio.h>
 
         int main() {
+        
         """;
 
         foreach (IAstNode node in nodes) {
-            if (node is AstBinaryExpression binary) {
-                output += $"printf(\"%f\\n\", {binary.ToC()});\n";
+            if (node is IAstExpression sjdgjjgs) {
+                output += $"    printf(\"%f\\n\", {sjdgjjgs.ToC()});\n";
             }
         }
 

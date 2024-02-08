@@ -1,4 +1,5 @@
 #include <stdio.h>
 
-int main() {printf("%f\n", (6.9 * 4.2));
+int main() {
+    printf("%f\n", ((double)1 + ((-(double)9) - (-(double)9))));
 }

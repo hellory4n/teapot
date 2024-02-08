@@ -13,5 +13,8 @@ enum TokenType
     // +  -      *     /      %
     Plus, Minus, Star, Slash, Percent,
 
+    // exclusively used by the parser
+    Negate,
+
     End
 }

@@ -37,7 +37,6 @@ static partial class Parser
                     break;
                 
                 case TokenType.Plus:
-                case TokenType.Minus:
                 case TokenType.Star:
                 case TokenType.Slash:
                 case TokenType.Percent:
@@ -45,6 +44,21 @@ static partial class Parser
                         output.Push(operators.Pop());
                     }
                     operators.Push(t);
+                    break;
+                
+                // the minus operator needs special handling since it might also be an unary operator
+                // for negating stuff
+                case TokenType.Minus:
+                    // 
+                    if (i == 0 || tokens[i - 1].Type == TokenType.LParen || tokens[i - 1].Type == TokenType.Plus || tokens[i - 1].Type == TokenType.Minus) {
+                        operators.Push(new Token { Type = TokenType.Negate });
+                    } else {
+                        // Binary minus
+                        while (operators.Count > 0 && GetPrecedence(operators.Peek().Type) >= GetPrecedence(t.Type)) {
+                            output.Push(operators.Pop());
+                        }
+                        operators.Push(t);
+                    }
                     break;
             }
 
@@ -101,6 +115,15 @@ static partial class Parser
                         Operator = token.Type
                     });
                     break;
+
+                case TokenType.Negate:
+                    IAstExpression operand = expression.Pop();
+
+                    expression.Push(new AstUnaryExpression {
+                        Operand = operand,
+                        Operator = TokenType.Negate
+                    });
+                    break;
             }
         }
 
@@ -112,6 +135,7 @@ static partial class Parser
     {
         if (tokenType == TokenType.Plus || tokenType == TokenType.Minus) return 1;
         if (tokenType == TokenType.Star || tokenType == TokenType.Slash || tokenType == TokenType.Percent) return 2;
+        if (tokenType == TokenType.Negate) return 3;
         return 0;
     }
 
