@@ -5,6 +5,8 @@ namespace csteapot.parser;
 static partial class Parser
 {
     public static List<IAstNode> Nodes = [];
+    public static int Errors = 0;
+
     static int i = 0;
     static List<Token> tokens = [];
 
