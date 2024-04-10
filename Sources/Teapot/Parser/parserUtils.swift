@@ -1,6 +1,6 @@
 import Foundation
 
-func getPrecedence(token: Token) -> UInt {
+func getPrecedence(_ token: Token) -> UInt {
     switch token {
     case .plus, .minus:
         return 1
@@ -8,5 +8,39 @@ func getPrecedence(token: Token) -> UInt {
         return 2
     default:
         return 0
+    }
+}
+
+// will be useful when i add 8639539 number primitives
+func isNumber(_ token: Token) -> Bool {
+    switch token {
+    case .integer(_), .float(_):
+        return true
+    default:
+        return false
+    }
+}
+
+func isOperator(_ token: Token) -> Bool {
+    switch token {
+    case .plus, .minus, .slash, .star, .percent, .and, .or, .bang, .bangeq, .equal1, .equal2, .greater, .greatereq,
+    .less, .lesseq:
+        return true;
+    default:
+        return false
+    }
+}
+
+func isLparen(_ token: Token) -> Bool {
+    switch token {
+        case .lparen: return true
+        default: return false
+    }
+}
+
+func isRparen(_ token: Token) -> Bool {
+    switch token {
+        case .rparen: return true
+        default: return false
     }
 }

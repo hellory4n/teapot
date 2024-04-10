@@ -32,7 +32,7 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
             if s[i + 1] == "&" {
                 out.append(Token.and)
             } else {
-                errors.append(TeaError.init(
+                errors.append(TeaError(
                     error: "Unexpected '&', do you mean &&?", severity: Severity.critical, path: path, line: debugline)
                 )
             }
@@ -41,7 +41,7 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
             if s[i + 1] == "|" {
                 out.append(Token.and)
             } else {
-                errors.append(TeaError.init(
+                errors.append(TeaError(
                     error: "Unexpected '|', do you mean ||?", severity: Severity.critical, path: path, line: debugline)
                 )
             }
@@ -110,7 +110,7 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
                 if isfloat {
                     let sgjurjrgsj = Double(result)
                     if sgjurjrgsj == nil {
-                        errors.append(TeaError.init(
+                        errors.append(TeaError(
                            error: "Invalid float literal", severity: Severity.critical, path: path, line: debugline)
                         )
                     } else {
@@ -119,7 +119,7 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
                 } else {
                     let jgjsigsdjg = Int64(result)
                     if jgjsigsdjg == nil {
-                        errors.append(TeaError.init(
+                        errors.append(TeaError(
                            error: "Invalid int literal", severity: Severity.critical, path: path, line: debugline)
                         )
                     } else {
