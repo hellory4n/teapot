@@ -1,9 +1,10 @@
 import Foundation
 
 enum Token {
-    case lparen // (
-    case rparen // )
-    case equal1 // =
+    case lparen    // (
+    case rparen    // )
+    case equal1    // =
+    case semicolon // ;
 
     // literals-ish
     case integer(num: Int64)
@@ -26,7 +27,9 @@ enum Token {
     case greatereq // >=
     case lesseq    // <=
     case equal2    // ==
+    case equal3    // ===
     case bangeq    // !=
+    case bangeq3   // !==
 
     // used by the parser
     case negate
@@ -72,6 +75,9 @@ extension Token: CustomStringConvertible {
         case .plus: return "[  +  ]"
         case .slash: return "[  /  ]"
         case .star: return "[  *  ]"
-        }
+        case .semicolon: return "[  ;  ]"
+        case .equal3: return "[  === ]"
+        case .bangeq3: return "[  !== ]"
+}
     }
 }

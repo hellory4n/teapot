@@ -1,5 +1,5 @@
 public struct Stack<T> {
-    private var array: [T] = []
+    var array: [T] = []
 
     public mutating func push(x: T) {
         array.append(x)

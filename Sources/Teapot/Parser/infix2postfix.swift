@@ -13,9 +13,11 @@ func infix2postfix(tokens: [Token], path: String, debugline: UInt) -> TeaResult<
         }
 
         if isOperator(token) {
-            while !isLparen(token) && getPrecedence(operators.peek()) > getPrecedence(token) {
-                let op = operators.pop()
-                output.append(op)
+            if operators.length() > 0 {
+                while !isLparen(token) && getPrecedence(operators.peek()) > getPrecedence(token) {
+                    let op = operators.pop()
+                    output.append(op)
+                }
             }
             operators.push(x: token)
         }
@@ -38,13 +40,14 @@ func infix2postfix(tokens: [Token], path: String, debugline: UInt) -> TeaResult<
     }
 
     while operators.length() > 0 {
+        print(operators)
+        output.append(operators.pop())
         // if the operator on the top of the stack is a parenthesis, then there are mismatched parentheses
         if isLparen(operators.peek()) || isRparen(operators.peek()) {
             return .errors(e: [
                 TeaError(error: "Mismatched parenthesis", severity: .critical, path: path, line: debugline)
             ])
         }
-        output.append(operators.pop())
     }
 
     return .out(o: output)
