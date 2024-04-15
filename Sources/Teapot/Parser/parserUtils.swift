@@ -23,8 +23,8 @@ func isNumber(_ token: Token) -> Bool {
 
 func isOperator(_ token: Token) -> Bool {
     switch token {
-    case .plus, .minus, .slash, .star, .percent, .and, .or, .bang, .bangeq, .bangeq3, .equal1, .equal2, .equal3,
-    .greater, .greatereq, .less, .lesseq:
+    case .plus, .minus, .slash, .star, .percent, .and, .or, .bang, .bangeq, .bangeq3, .equal2, .equal3,
+    .greater, .greatereq, .less, .lesseq, .negate:
         return true;
     default:
         return false
@@ -72,7 +72,7 @@ func isMinus(_ token: Token) -> Bool {
 
 func isBinary(_ token: Token) -> Bool {
     switch token {
-    case .plus, .minus, .slash, .star, .percent, .and, .bang, .bangeq, .bangeq3, .equal1, .equal2, .equal3,
+    case .plus, .minus, .slash, .star, .percent, .and, .bangeq, .bangeq3, .equal2, .equal3,
     .greater, .greatereq, .less, .lesseq:
         return true;
     default:

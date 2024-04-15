@@ -10,6 +10,9 @@ case .out(let o):
     switch houhynohnio {
     case .out(let o):
         print(o)
+        let jgjg = postfix2ast(expressions: o)
+        print(jgjg)
+
     case .errors(let e):
         for error in e {
             switch error.severity {
