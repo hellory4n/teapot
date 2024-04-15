@@ -8,7 +8,7 @@ func infix2postfix(tokens: [Token], path: String, debugline: UInt) -> TeaResult<
     while token_.count > 0 {
         let token = token_.removeFirst()
 
-        if isNumber(token) {
+        if isOperand(token) {
             output.append(token)
         }
 

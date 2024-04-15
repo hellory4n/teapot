@@ -4,8 +4,10 @@ protocol Ast {}
 protocol Expression: Ast {}
 
 indirect enum ArithmeticExpr: Expression {
-    // 9
-    case literal(n: Double)
+    // all the literals
+    case i64_literal(n: Int64)
+    case f64_literal(n: Float64)
+
     // -9
     case negate(n: ArithmeticExpr)
 
@@ -24,8 +26,11 @@ indirect enum ArithmeticExpr: Expression {
 extension ArithmeticExpr: CustomStringConvertible {
     var description: String {
         switch self {
-        case .literal(let n):
-            return "(literal \(n))"
+        case .i64_literal(let n):
+            return "(integer 64 \(n))"
+        case .f64_literal(let n):
+            return "(float 64 \(n))"
+        
         case .negate(let n):
             return "(negate \(n))"
         

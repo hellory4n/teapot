@@ -44,3 +44,12 @@ func isRparen(_ token: Token) -> Bool {
         default: return false
     }
 }
+
+func isOperand(_ token: Token) -> Bool {
+    switch token {
+    case .integer(_), .float(_), .kfalse, .ktrue:
+        return true
+    default:
+        return false
+    }
+}
