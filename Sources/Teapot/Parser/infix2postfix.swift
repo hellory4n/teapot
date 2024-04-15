@@ -5,6 +5,7 @@ func infix2postfix(tokens: [Token], path: String, debugline: UInt) -> TeaResult<
     var operators: Stack<Token> = Stack()
     var token_ = tokens
 
+    var i = 0
     while token_.count > 0 {
         let token = token_.removeFirst()
 
@@ -13,6 +14,20 @@ func infix2postfix(tokens: [Token], path: String, debugline: UInt) -> TeaResult<
         }
 
         if isOperator(token) {
+            // handle negation, btw -9 is negating 9, which does the same thing in practice
+            if isMinus(token) {
+                // we have to do this check first so it doesn't instantly die sometimes
+                if i == 0 {
+                    operators.push(x: Token.negate)
+                    i += 1
+                    continue
+                } else if isLparen(tokens[i - 1]) || isBinary(tokens[i - 1]) {
+                    operators.push(x: Token.negate)
+                    i += 1
+                    continue
+                }
+            }
+
             if operators.length() > 0 {
                 while !isLparen(token) && getPrecedence(operators.peek()) > getPrecedence(token) {
                     let op = operators.pop()
@@ -40,6 +55,8 @@ func infix2postfix(tokens: [Token], path: String, debugline: UInt) -> TeaResult<
             // discard left parenthesis
             _ = operators.pop()
         }
+        
+        i += 1
     }
 
     while operators.length() > 0 {
