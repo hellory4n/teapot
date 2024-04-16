@@ -26,6 +26,7 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
         case "%": out.append(Token.percent)
         case "(": out.append(Token.lparen)
         case ")": out.append(Token.rparen)
+        case ";": out.append(Token.semicolon)
 
         // dumb operators (&& and ||)
         case "&":

@@ -79,3 +79,17 @@ func isBinary(_ token: Token) -> Bool {
         return false
     }
 }
+
+func isSemicolon(_ token: Token) -> Bool {
+    switch token {
+        case .semicolon: return true
+        default: return false
+    }
+}
+
+func isNewline(_ token: Token) -> Bool {
+    switch token {
+        case .newline: return true
+        default: return false
+    }
+}

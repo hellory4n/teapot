@@ -2,6 +2,7 @@ import Foundation
 
 protocol Ast {}
 protocol Expression: Ast {}
+protocol Statement: Ast {}
 
 struct PlaceholderExpr: Expression {}
 
@@ -50,6 +51,12 @@ enum BooleanExpr: Expression {
     case greaterEqual(a: Expression, b: Expression)
     // 1 <= 2
     case lessEqual(a: Expression, b: Expression)
+}
+
+enum BasicStatement: Statement {
+    case varDefine(type: String, name: String, expr: Expression)
+    case varAssign(name: String, expr: Expression)
+    case print(expr: Expression)
 }
 
 extension ArithmeticExpr: CustomStringConvertible {

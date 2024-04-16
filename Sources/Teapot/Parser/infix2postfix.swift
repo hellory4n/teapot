@@ -1,6 +1,6 @@
 import Foundation
 
-func infix2postfix(tokens: [Token], path: String, debugline: UInt) -> TeaResult<[Token]> {
+func infix2postfix(tokens: [Token], debugline: UInt) -> TeaResult<[Token]> {
     var output: [Token] = []
     var operators: Stack<Token> = Stack()
     var token_ = tokens
@@ -46,7 +46,7 @@ func infix2postfix(tokens: [Token], path: String, debugline: UInt) -> TeaResult<
                 // if the stack runs out without finding a left parenthesis, then there are mismatched parenthesis
                 if operators.length() == 0 {
                     return .errors(e: [
-                        TeaError(error: "Mismatched parenthesis 1", severity: .critical, path: path, line: debugline)
+                        TeaError(error: "Mismatched parenthesis 1", severity: .critical, line: debugline)
                     ])
                 }
                 output.append(operators.pop())
@@ -63,7 +63,7 @@ func infix2postfix(tokens: [Token], path: String, debugline: UInt) -> TeaResult<
         // if the operator on the top of the stack is a parenthesis, then there are mismatched parentheses
         if isLparen(operators.peek()) || isRparen(operators.peek()) {
             return .errors(e: [
-                TeaError(error: "Mismatched parenthesis 2", severity: .critical, path: path, line: debugline)
+                TeaError(error: "Mismatched parenthesis 2", severity: .critical, line: debugline)
             ])
         }
 

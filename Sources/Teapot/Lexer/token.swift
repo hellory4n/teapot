@@ -5,6 +5,7 @@ enum Token {
     case rparen    // )
     case equal1    // =
     case semicolon // ;
+    case newline // purely for debugging (for users)
 
     // literals-ish
     case integer(num: Int64)
@@ -38,6 +39,19 @@ enum Token {
     // we start them with k so swift doesn't get mad
     case ktrue
     case kfalse
+
+    // primitives
+    case kbool
+    case kint
+    case kint32
+    case kint16
+    case kint8
+    case kuint
+    case kuint32
+    case kuint16
+    case kuint8
+    case kfloat
+    case kfloat32
 
     case end
 }
@@ -78,6 +92,17 @@ extension Token: CustomStringConvertible {
         case .semicolon: return "[  ;  ]"
         case .equal3: return "[  === ]"
         case .bangeq3: return "[  !== ]"
+        case .kbool: return "[bool type]"
+        case .kint: return "[int type]"
+        case .kint32: return "[int32 type]"
+        case .kint16: return "[int16 type]"
+        case .kint8: return "[int8 type]"
+        case .kuint: return "[uint type]"
+        case .kuint32: return "[uint32 type]"
+        case .kuint16: return "[uint16 type]"
+        case .kuint8: return "[uint8 type]"
+        case .kfloat: return "[float type]"
+        case .kfloat32: return "[float32 type]"
 }
     }
 }

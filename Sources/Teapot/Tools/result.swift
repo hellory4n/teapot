@@ -8,7 +8,6 @@ enum TeaResult<T> {
 struct TeaError {
     let error: String
     let severity: Severity
-    let path: String
     let line: UInt
 }
 
