@@ -31,7 +31,6 @@ func handleStatement(stmt: [Token], debugline: UInt) -> TeaResult<Statement> {
                 let keywordstr: String = keywords[newStmt[0]]!
 
                 out = FunctionStatement.varDefine(type: keywordstr, name: id, expr: expr)
-                print(out!)
 
             case .errors(e: let e):
                 errors.append(contentsOf: e)
@@ -39,6 +38,23 @@ func handleStatement(stmt: [Token], debugline: UInt) -> TeaResult<Statement> {
 
         default: errors.append(TeaError(error: "Unexpected token: \(newStmt[1])", severity: Severity.critical, line: debugline))
         }
+    
+    case .kprint:
+        // process the expression
+        var exprTokens = newStmt
+        exprTokens.removeFirst(1)
+        let postfixExpr = infix2postfix(tokens: exprTokens, debugline: debugline)
+            
+            // more stupid switch cases ;)
+            switch postfixExpr {
+            case .out(o: let o):
+                let expr = postfix2ast(expressions: o)
+                out = FunctionStatement.print(expr: expr)
+                print(out!)
+
+            case .errors(e: let e):
+                errors.append(contentsOf: e)
+            }
 
     default: errors.append(TeaError(error: "Invalid statement", severity: Severity.critical, line: debugline))
     }

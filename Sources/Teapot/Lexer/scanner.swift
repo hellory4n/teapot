@@ -1,11 +1,10 @@
 import Foundation
 
-var i = 0
-
 func scan(source: String, path: String) -> TeaResult<[Token]> {
     var out: [Token] = []
     var errors: [TeaError] = []
     var debugline: UInt = 1
+    var i = 0
 
     // so we don't have to deal with checking for the end of the file
     let source2 = source + "\0\0\0"
@@ -30,11 +29,9 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
 
         // dumb operators (&& and ||)
         case "&":
-            print("s 0 = \(s[i])")
-            print("s 1 = \(s[i+1])")
-            print("s 2 = \(s[i+2])")
             if s[i + 1] == "&" {
                 out.append(Token.and)
+                i += 1
             } else {
                 errors.append(TeaError(
                     error: "Unexpected '&', do you mean &&?", severity: Severity.critical, line: debugline)
@@ -44,6 +41,7 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
         case "|":
             if s[i + 1] == "|" {
                 out.append(Token.or)
+                i += 1
             } else {
                 errors.append(TeaError(
                     error: "Unexpected '|', do you mean ||?", severity: Severity.critical, line: debugline)
@@ -54,6 +52,7 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
         case "=":
             if s[i + 1] == "=" {
                 out.append(Token.equal2)
+                i += 1
             } else {
                 out.append(Token.equal1)
             }
@@ -62,6 +61,7 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
         case "!":
             if s[i + 1] == "=" {
                 out.append(Token.bangeq)
+                i += 1
             } else {
                 out.append(Token.bang)
             }
@@ -69,13 +69,15 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
         case "<":
             if s[i + 1] == "=" {
                 out.append(Token.lesseq)
+                i += 1
             } else {
                 out.append(Token.less)
             }
         
         case ">":
-            if s[i + 1] == ">" {
+            if s[i + 1] == "=" {
                 out.append(Token.greatereq)
+                i += 1
             } else {
                 out.append(Token.greater)
             }

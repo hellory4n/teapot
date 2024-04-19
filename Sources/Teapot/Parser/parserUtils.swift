@@ -1,13 +1,16 @@
 import Foundation
 
 func getPrecedence(_ token: Token) -> UInt {
+    // based on how C defines those
     switch token {
-    case .plus, .minus:
-        return 1
-    case .star, .slash, .percent:
-        return 2
-    default:
-        return 0
+        case .or: return 1
+        case .and: return 2
+        case .equal2, .equal3, .bangeq, .bangeq3: return 3
+        case .greater, .greatereq, .less, .lesseq: return 4
+        case .plus, .minus: return 5
+        case .star, .slash, .percent: return 6
+        case .bang: return 7
+        default: return 0
     }
 }
 
@@ -72,7 +75,7 @@ func isMinus(_ token: Token) -> Bool {
 
 func isBinary(_ token: Token) -> Bool {
     switch token {
-    case .plus, .minus, .slash, .star, .percent, .and, .bangeq, .bangeq3, .equal2, .equal3,
+    case .plus, .minus, .slash, .star, .percent, .and, .or, .bangeq, .bangeq3, .equal2, .equal3,
     .greater, .greatereq, .less, .lesseq:
         return true;
     default:

@@ -28,6 +28,12 @@ func infix2postfix(tokens: [Token], debugline: UInt) -> TeaResult<[Token]> {
                 }
             }
 
+            if isUnary(token) {
+                operators.push(x: token)
+                i += 1
+                continue
+            }
+
             if operators.length() > 0 {
                 while !isLparen(token) && getPrecedence(operators.peek()) > getPrecedence(token) {
                     let op = operators.pop()
@@ -46,7 +52,7 @@ func infix2postfix(tokens: [Token], debugline: UInt) -> TeaResult<[Token]> {
                 // if the stack runs out without finding a left parenthesis, then there are mismatched parenthesis
                 if operators.length() == 0 {
                     return .errors(e: [
-                        TeaError(error: "Mismatched parenthesis 1", severity: .critical, line: debugline)
+                        TeaError(error: "Mismatched parenthesis", severity: .critical, line: debugline)
                     ])
                 }
                 output.append(operators.pop())
@@ -63,7 +69,7 @@ func infix2postfix(tokens: [Token], debugline: UInt) -> TeaResult<[Token]> {
         // if the operator on the top of the stack is a parenthesis, then there are mismatched parentheses
         if isLparen(operators.peek()) || isRparen(operators.peek()) {
             return .errors(e: [
-                TeaError(error: "Mismatched parenthesis 2", severity: .critical, line: debugline)
+                TeaError(error: "Mismatched parenthesis", severity: .critical, line: debugline)
             ])
         }
 

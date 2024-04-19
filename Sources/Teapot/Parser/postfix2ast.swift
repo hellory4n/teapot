@@ -2,6 +2,7 @@ import Foundation
 
 func postfix2ast(expressions: [Token]) -> Expression {
     var stack = Stack<Expression>()
+    print(expressions)
 
     for token in expressions {
         if isOperand(token) {

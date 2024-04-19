@@ -14,6 +14,7 @@ func getKeywords() -> [String: Token] {
         "uint16": Token.kuint16,
         "uint8": Token.kuint8,
         "float": Token.kfloat,
-        "float32": Token.kfloat32
+        "float32": Token.kfloat32,
+        "print": Token.kprint
     ]
 }

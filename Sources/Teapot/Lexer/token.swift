@@ -39,6 +39,7 @@ enum Token: Hashable {
     // we start them with k so swift doesn't get mad
     case ktrue
     case kfalse
+    case kprint
 
     // primitives
     case kbool
@@ -104,7 +105,7 @@ extension Token: CustomStringConvertible {
         case .kfloat: return "[float type]"
         case .kfloat32: return "[float32 type]"
         case .newline: return "[newline]"
-
+        case .kprint: return "[print]"
 }
     }
 }
