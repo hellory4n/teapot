@@ -8,7 +8,7 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
     var debugline: UInt = 1
 
     // so we don't have to deal with checking for the end of the file
-    let source2 = source + "\0"
+    let source2 = source + "\0\0\0"
     // i used this variable a lot so i'm not gonna give a cute name like
     // `sourceCodeConvertedToAnArrayOfCharacters`, fuck you
     let s = Array(source2)
@@ -30,20 +30,23 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
 
         // dumb operators (&& and ||)
         case "&":
+            print("s 0 = \(s[i])")
+            print("s 1 = \(s[i+1])")
+            print("s 2 = \(s[i+2])")
             if s[i + 1] == "&" {
                 out.append(Token.and)
             } else {
                 errors.append(TeaError(
-                    error: "Unexpected '&', do you mean &&?", severity: Severity.critical, path: path, line: debugline)
+                    error: "Unexpected '&', do you mean &&?", severity: Severity.critical, line: debugline)
                 )
             }
         
         case "|":
             if s[i + 1] == "|" {
-                out.append(Token.and)
+                out.append(Token.or)
             } else {
                 errors.append(TeaError(
-                    error: "Unexpected '|', do you mean ||?", severity: Severity.critical, path: path, line: debugline)
+                    error: "Unexpected '|', do you mean ||?", severity: Severity.critical, line: debugline)
                 )
             }
         
@@ -81,7 +84,9 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
         case " ": break
         case "\t": break
         case "\r": break
-        case "\n": debugline += 1
+        case "\n":
+            out.append(Token.newline)
+            debugline += 1
         
         default:
             // is it a number??????????
@@ -112,7 +117,7 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
                     let sgjurjrgsj = Double(result)
                     if sgjurjrgsj == nil {
                         errors.append(TeaError(
-                           error: "Invalid float literal", severity: Severity.critical, path: path, line: debugline)
+                           error: "Invalid float literal", severity: Severity.critical, line: debugline)
                         )
                     } else {
                         out.append(Token.float(num: sgjurjrgsj!))
@@ -121,7 +126,7 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
                     let jgjsigsdjg = Int64(result)
                     if jgjsigsdjg == nil {
                         errors.append(TeaError(
-                           error: "Invalid int literal", severity: Severity.critical, path: path, line: debugline)
+                           error: "Invalid int literal", severity: Severity.critical, line: debugline)
                         )
                     } else {
                         out.append(Token.integer(num: jgjsigsdjg!))
@@ -134,9 +139,7 @@ func scan(source: String, path: String) -> TeaResult<[Token]> {
                 var id = String(c)
 
                 while isValidId(s[i + 1]) {
-                    if s[i + 1] != "_" {
-                        id += String(s[i + 1])
-                    }
+                    id += String(s[i + 1])
                     i += 1
                 }
 

@@ -1,6 +1,6 @@
 import Foundation
 
-enum Token {
+enum Token: Hashable {
     case lparen    // (
     case rparen    // )
     case equal1    // =
@@ -103,6 +103,8 @@ extension Token: CustomStringConvertible {
         case .kuint8: return "[uint8 type]"
         case .kfloat: return "[float type]"
         case .kfloat32: return "[float32 type]"
+        case .newline: return "[newline]"
+
 }
     }
 }

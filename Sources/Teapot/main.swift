@@ -6,20 +6,20 @@ let hbjknhjhn = scan(source: lol, path: "langtest/help.tpot")
 switch hbjknhjhn {
 case .out(let o):
     print(o)
-    let houhynohnio = infix2postfix(tokens: o, debugline: 1)
+    let houhynohnio = parse(tokens: o, path: "langtest/help.tpot")
     switch houhynohnio {
     case .out(let o):
+        print("yippee")
         print(o)
-        let jgjg = postfix2ast(expressions: o)
-        print(jgjg)
 
     case .errors(let e):
+        print("uh oh")
         for error in e {
             switch error.severity {
             case .critical:
-                print("\u{001B}[31mError at 'langtest/help.tpot' line \(error.line): \(error.error)\u{001B}[0m\n")
+                print("Error at 'langtest/help.tpot' line \(error.line): \(error.error)\n")
             case .warning:
-                print("\u{001B}[33mWarning about 'langtest/help.tpot' line \(error.line): \(error.error)u{001B}[0m\n")
+                print("Warning about 'langtest/help.tpot' line \(error.line): \(error.error)\n")
             case .suggestion:
                 print("Suggestion about 'langtest/help.tpot' line \(error.line): \(error.error)\n")
             }
@@ -30,9 +30,9 @@ case .errors(let e):
     for error in e {
         switch error.severity {
         case .critical:
-            print("\u{001B}[31mError at 'langtest/help.tpot' line \(error.line): \(error.error)\u{001B}[0m\n")
+            print("Error at 'langtest/help.tpot' line \(error.line): \(error.error)\n")
         case .warning:
-            print("\u{001B}[33mWarning about 'langtest/help.tpot' line \(error.line): \(error.error)u{001B}[0m\n")
+            print("Warning about 'langtest/help.tpot' line \(error.line): \(error.error)\n")
         case .suggestion:
             print("Suggestion about 'langtest/help.tpot' line \(error.line): \(error.error)\n")
         }

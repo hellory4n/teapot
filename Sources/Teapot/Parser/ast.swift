@@ -53,7 +53,7 @@ enum BooleanExpr: Expression {
     case lessEqual(a: Expression, b: Expression)
 }
 
-enum BasicStatement: Statement {
+enum FunctionStatement: Statement {
     case varDefine(type: String, name: String, expr: Expression)
     case varAssign(name: String, expr: Expression)
     case print(expr: Expression)
@@ -109,6 +109,19 @@ extension BooleanExpr: CustomStringConvertible {
             return "(\(a) >= \(b))"
         case .lessEqual(a: let a, b: let b):
             return "(\(a) <= \(b))"
+        }
+    }
+}
+
+extension FunctionStatement: CustomStringConvertible{
+    var description: String {
+        switch self {
+        case .varDefine(type: let type, name: let name, expr: let expr):
+            return "{variable definition '\(name)' of type '\(type)' = \(expr)}"
+        case .varAssign(name: let name, expr: let expr):
+            return "{variable assignment to '\(name) with \(expr)}"
+        case .print(expr: let expr):
+            return "{print statement = \(expr)}"
 }
     }
 }
