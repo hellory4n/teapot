@@ -8,8 +8,8 @@ enum TokenType {
     newline;     // for reporting errors
 
     // identifiers-ish
-    integer;
-    float;
+    integer_literal;
+    float_literal;
     identifier;
 
     // arithmetic operators
