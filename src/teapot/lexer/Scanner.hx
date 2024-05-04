@@ -1,5 +1,6 @@
 package teapot.lexer;
 
+import teapot.lexer.Keywords;
 import teapot.lexer.ScannerUtils;
 import teapot.tools.Result;
 
@@ -100,7 +101,7 @@ function scan(src: String, path: String): Result<Array<Token>> {
                     }
                 }
                 else if (is_valid_id(char(c))) {
-
+                    output.push(parse_ids_and_keywords(src));
                 }
         }
 
@@ -147,7 +148,7 @@ function parse_numbers(src: String): Result<Token> {
     // parse
     if (is_float) {
         var val = Std.parseFloat(result);
-        if (val == null) {
+        if (val == Math.NaN) {
             return err([new Error("Invalid float literal", 2, i_start, i)]);
         }
         else {
@@ -167,8 +168,18 @@ function parse_numbers(src: String): Result<Token> {
 
 function parse_ids_and_keywords(src: String): Token {
     var id: String = src.charAt(i);
+    var i_start = i;
 
     while (is_valid_id(char(src.charAt(i + 1)))) {
-        
+        i++;
+        id += src.charAt(i);
+    }
+
+    // is it a keyword or an identifier?
+    var keywords = get_keywords();
+    if (keywords.exists(id)) {
+        return new Token(keywords[id], null, i_start, i);
+    } else {
+        return new Token(TokenType.identifier, id, i_start, i);
     }
 }

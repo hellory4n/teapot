@@ -16,12 +16,14 @@ class Error {
     public var severity: Int;
     public var start: Int;
     public var end: Int;
+    public var quick_fix: String;
 
     // this language sucks
-    public function new(error: String, severity: Int, start: Int, end: Int) {
+    public function new(error: String, severity: Int, start: Int, end: Int, quick_fix: String = "") {
         this.error = error;
         this.severity = severity;
         this.start = start;
         this.end = end;
+        this.quick_fix = quick_fix;
     }
 }

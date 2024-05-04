@@ -12,4 +12,9 @@ class Token {
         this.start = start;
         this.end = end;
     }
+
+    // it's not in snake_case so it's implicitly converted & stuff :)
+    public function toString(): String {
+        return '($type = $value, $start - $end)';
+    }
 }
