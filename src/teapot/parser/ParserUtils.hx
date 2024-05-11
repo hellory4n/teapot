@@ -92,3 +92,10 @@ function is_newline(token: Token): Bool {
         default: return false;
     }
 }
+
+function is_primitive(token: Token): Bool {
+    switch (token.type) {
+        case _bool | _int | _int32 | _int16 | _int8 | _uint | _uint32 | _uint16 | _uint8 | _float | _float32: return true;
+        default: return false;
+    }
+}

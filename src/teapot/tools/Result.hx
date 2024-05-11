@@ -16,14 +16,23 @@ class Error {
     public var severity: Int;
     public var start: Int;
     public var end: Int;
-    public var quick_fix: String;
+    public var quick_fix: Array<QuickFix> = [];
 
     // this language sucks
-    public function new(error: String, severity: Int, start: Int, end: Int, quick_fix: String = "") {
+    public function new(error: String, severity: Int, start: Int, end: Int) {
         this.error = error;
         this.severity = severity;
         this.start = start;
         this.end = end;
-        this.quick_fix = quick_fix;
+    }
+}
+
+class QuickFix {
+    public var code: String;
+    public var line: Int;
+
+    public function new(code: String, line: Int) {
+        this.code = code;
+        this.line = line;
     }
 }

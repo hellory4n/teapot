@@ -5,7 +5,9 @@ interface Ast {}
 interface Expr extends Ast {}
 interface Stmt extends Ast {}
 
-class PlaceholderExpr implements Expr {}
+class PlaceholderExpr implements Expr {
+    public function new() {}
+}
 
 class IntegerLiteralExpr implements Expr {
     var n: Int;
