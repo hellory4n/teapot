@@ -1,5 +1,0 @@
--main teapot.Main
--cp src/
--cpp bin/Teapot
--lib hxcpp-debug-server
--lib console.hx
