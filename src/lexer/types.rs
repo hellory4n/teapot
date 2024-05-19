@@ -4,7 +4,7 @@ use std::fmt::Debug;
 pub enum TokenType {
     LParen,
     RParen,
-    Equal1,
+    Equal,
     Semicolon,
     Newline,
 
@@ -28,10 +28,10 @@ pub enum TokenType {
     Less,
     GreatEq,
     LessEq,
-    Equal2,
-    Equal3,
+    EqualEqual,
+    EqualEqualEqual,
     BangEq,
-    BangEq3,
+    BangEqEq,
 
     // parser stuff
     Negate,
@@ -59,10 +59,10 @@ pub enum TokenType {
 
 #[derive(Debug)]
 pub struct Token {
-    token_type: TokenType,
-    value: TokenValue,
-    start: u64,
-    end: u64,
+    pub token_type: TokenType,
+    pub value: TokenValue,
+    pub start: u64,
+    pub end: u64,
 }
 
 #[derive(Debug)]
