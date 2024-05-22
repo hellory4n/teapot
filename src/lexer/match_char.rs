@@ -1,4 +1,4 @@
-use std::rc::Rc;
+use std::{borrow::Borrow, rc::{Rc, Weak}};
 
 use crate::tools::{Error, Result};
 
@@ -111,11 +111,8 @@ fn match_char(lexer: &mut Lexer) -> Result<Token> {
     };
 
     return match err {
-        Some(m) => Result::Err(& [m.clone()]),
+        // at least it's memory-safe
+        Some(m) => Result::Err(&(Box::new([m.clone()])).get(0).unwrap().upgrade().into(),.gsjjfhaufgdhuifbgafg*32984i*($u3895uj*(%u4mji5o9u94))),
         None => Result::Out(token),
     }
-}
-
-fn this_language_sucks<'a>(m: &'a Error<'a>) -> [Error<'a>] {
-    return [m.clone()];
 }

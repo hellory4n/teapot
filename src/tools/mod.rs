@@ -1,9 +1,11 @@
+use std::borrow::Borrow;
+
 pub enum Result<'a, T> {
     Out(T),
     Err(&'a [Error<'a>]),
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Borrow)]
 pub struct Error<'a> {
     pub message: &'a str,
     /** it's a number for conciseness - 0 = critical, 1 = warning, 2 = suggestion */
